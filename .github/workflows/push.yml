@@ -1,0 +1,15 @@
+name: Flutter/Rust Android Gradle Bug Demo
+on: [push]
+jobs:
+  RunDocker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: run_docker
+        run: |
+         docker build -f .devcontainer/Dockerfile -t flutter_bug .
+         docker run --rm -v $PWD:/home/dev/project flutter_bug /bin/bash -c "cd /home/dev/project/flutter_bug/ &&
+         flutter build apk"
